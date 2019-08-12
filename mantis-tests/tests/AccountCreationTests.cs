@@ -3,7 +3,6 @@ using System.Text;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System.IO;
-using mantis_tests.model;
 
 namespace mantis_tests
 {

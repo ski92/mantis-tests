@@ -13,8 +13,13 @@ namespace mantis_tests
     {
         protected IWebDriver driver;
         public string baseURL;
+        public FtpHelper Ftp { get; set; }
+        public ProjectManagementHelper Projects { get; set; }
+        public LoginHelper Auth { get; set; }
+        public ManagementMenuHelper Menu { get; private set; }
+        public NavigationHelper NavigateTo { get; private set; }
+        public RegistrationHelper Registration { get; private set; }
 
-        public RegistrationHelper Registration { get; }
 
         private new static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -23,7 +28,11 @@ namespace mantis_tests
             driver = new FirefoxDriver();
             baseURL = "http://localhost:8081";
             Registration = new RegistrationHelper(this);
-            Ftp = new FtpHelper(this);
+            //Ftp = new FtpHelper(this);
+            Projects = new ProjectManagementHelper(this);
+            Auth = new LoginHelper(this);
+            Menu = new ManagementMenuHelper(this);
+            NavigateTo = new NavigationHelper(this, baseURL);
         }
 
         ~ApplicationManager()
@@ -43,8 +52,8 @@ namespace mantis_tests
             if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost:8081/mantisbt-2.21.1/login_page.php";
                 app.Value = newInstance;
+                newInstance.driver.Url = "http://localhost:8081/mantisbt-2.21.1/login_page.php";
             }
             return app.Value;
         }
@@ -56,7 +65,5 @@ namespace mantis_tests
                 return driver;
             }
         }
-
-        public FtpHelper Ftp { get; set; }
     }
 }
