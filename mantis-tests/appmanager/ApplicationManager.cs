@@ -19,6 +19,7 @@ namespace mantis_tests
         public ManagementMenuHelper Menu { get; private set; }
         public NavigationHelper NavigateTo { get; private set; }
         public RegistrationHelper Registration { get; private set; }
+        public APIHelper API { get; set; }
 
 
         private new static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
@@ -33,6 +34,7 @@ namespace mantis_tests
             Auth = new LoginHelper(this);
             Menu = new ManagementMenuHelper(this);
             NavigateTo = new NavigationHelper(this, baseURL);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
